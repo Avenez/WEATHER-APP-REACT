@@ -29,6 +29,8 @@ const WeatherShow = () => {
 
   console.log(forecastArray);
 
+  const APIKey = "2693517c12647f45bc5c1d7466449299";
+
   // Funzione per ottenere l'URL dell'icona basata sul codice restituito da OpenWeatherMap
   const getWeatherIconUrl = (iconCode) => {
     return `https://openweathermap.org/img/wn/${iconCode}.png`;
@@ -38,7 +40,7 @@ const WeatherShow = () => {
   const fetchGeoData = async () => {
     try {
       const response = await fetch(
-        `http://api.openweathermap.org/geo/1.0/direct?q=${cityName},IT&limit=2&appid=b1c27102e6daa94992f0a508ba900eb9`
+        `http://api.openweathermap.org/geo/1.0/direct?q=${cityName},IT&limit=2&appid=${APIKey}`
       );
 
       if (!response.ok) {
@@ -64,7 +66,7 @@ const WeatherShow = () => {
       }
 
       const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${cityObj.lat}&lon=${cityObj.lon}&lang=it&units=metric&appid=b1c27102e6daa94992f0a508ba900eb9`
+        `https://api.openweathermap.org/data/2.5/weather?lat=${cityObj.lat}&lon=${cityObj.lon}&lang=it&units=metric&appid=${APIKey}`
       );
 
       if (!response.ok) {
@@ -87,7 +89,7 @@ const WeatherShow = () => {
       }
 
       const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/forecast?lat=${cityObj.lat}&lon=${cityObj.lon}&lang=it&units=metric&appid=b1c27102e6daa94992f0a508ba900eb9`
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${cityObj.lat}&lon=${cityObj.lon}&lang=it&units=metric&appid=${APIKey}`
       );
 
       if (!response.ok) {
