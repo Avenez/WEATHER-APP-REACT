@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ForecastElement from "../componets/ForecastElement";
 
 const WeatherShow = () => {
@@ -8,6 +8,7 @@ const WeatherShow = () => {
   const [cityWeatherData, setCityWeatherData] = useState(null);
   const [cityWeatherDataForecast, setCityWeatherDataForecast] = useState(null);
   const { cityName } = useParams();
+  const navigate = useNavigate();
 
   const capitalizedCityName = cityName.charAt(0).toUpperCase() + cityName.slice(1);
   const temperature = cityWeatherData?.main?.temp?.toFixed(1) || "";
@@ -128,21 +129,20 @@ const WeatherShow = () => {
     allMyFetch();
     console.log(cityObj);
     console.log(cityWeatherData);
-    console.log(cityWeatherDataForecast);
   }, []);
 
   return (
     <>
       <Container>
         <Row>
-          <Col></Col>
-          <Col xs={10} className="text-center mt-5 ">
+          <Col className=" d-sm-none"></Col>
+          <Col xs={8} md={5} className="text-center mt-5 weatherContainer">
             <Row className="">
               <h1 className="display-2">{capitalizedCityName}</h1>
             </Row>
             <Row>
               <h2 className="display-1 mt-2 ">{temperature}°C</h2>
-              <p className="h3 mt-2 ">{`Percepita: ${temperaturePerc}`}</p>
+              <p className="h3 mt-2 ">{`Percepita: ${temperaturePerc}°C`}</p>
             </Row>
             <Row className="d-flex align-items-center">
               <Col xs={12} className="d-flex justify-content-center align-items-center m-0  ">
@@ -178,20 +178,18 @@ const WeatherShow = () => {
                 minTemp={day?.main?.temp_min}
               />
             ))}
-            <Row xs={4} className="cursor">
-              <Col>
-                <p>Martedì</p>
-              </Col>
-              <Col>
-                <i class="bi bi-cloud-drizzle"></i>
-              </Col>
-              <Col>
-                <p>12°C</p>
-              </Col>
-              <Col>
-                <p>0°C</p>
-              </Col>
-            </Row>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={8}>
+            <button
+              className="btn btn-primary"
+              onClick={() => {
+                navigate("/");
+              }}
+            >
+              Return
+            </button>
           </Col>
         </Row>
       </Container>

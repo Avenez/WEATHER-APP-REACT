@@ -52,3 +52,9 @@ body {
 .cursor {
   cursor: pointer;
 }
+
+.weatherContainer {
+  color: white;
+  background-color: cornflowerblue;
+  border-radius: 20px;
+}
