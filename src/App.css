@@ -42,11 +42,9 @@
 }
 
 body {
-  height: 100vh;
   background: rgb(255, 255, 255);
   background: linear-gradient(180deg, rgba(255, 255, 255, 1) 24%, rgba(151, 177, 255, 1) 100%);
-  margin: 0; /* Opzionale: rimuove il margine predefinito del corpo */
-  padding: 0; /* Opzionale: rimuove il padding predefinito del corpo */
+  background-attachment: fixed;
 }
 
 .cursor {

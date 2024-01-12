@@ -10,6 +10,10 @@ const WeatherShow = () => {
   const { cityName } = useParams();
   const navigate = useNavigate();
 
+  //--------------------------------------
+
+  //--------------------------------------
+
   const capitalizedCityName = cityName.charAt(0).toUpperCase() + cityName.slice(1);
   const temperature = cityWeatherData?.main?.temp?.toFixed(1) || "";
   const temperaturePerc = cityWeatherData?.main?.feels_like?.toFixed(1) || "";
@@ -27,6 +31,39 @@ const WeatherShow = () => {
       giornoCorrente = giornoElemento;
     }
   });
+
+  //-----------------------------------------------------------
+
+  const groupedForecastArray = [];
+
+  cityWeatherDataForecast?.list?.forEach((elemento) => {
+    const dataElemento = elemento?.dt_txt?.split(" ");
+    const giornoElemento = dataElemento?.[0];
+
+    // Trova l'oggetto corrispondente nella groupedForecastArray in base alla data
+    let existingGroup = groupedForecastArray.find((group) => group.data === giornoElemento);
+
+    // Se non esiste ancora un gruppo con questa data, crea un nuovo gruppo
+    if (!existingGroup) {
+      existingGroup = {
+        data: giornoElemento,
+        elementi: [],
+      };
+      groupedForecastArray.push(existingGroup);
+    }
+
+    // Aggiungi l'elemento al gruppo corrente
+    existingGroup.elementi.push(elemento);
+  });
+
+  // groupedForecastArray è un nuovo array dove ogni elemento rappresenta un gruppo di elementi corrispondenti a una data
+
+  console.log("qui");
+  console.log(groupedForecastArray);
+
+  //------------------------------------------------------------
+
+  // Ora forecastByDate è un oggetto dove ogni chiave rappresenta una data e il valore è un array di elementi corrispondenti a quella data
 
   console.log(forecastArray);
 
@@ -49,10 +86,13 @@ const WeatherShow = () => {
       }
 
       const data = await response.json();
+      fetchWeatherData(data[0]);
+      fetchForecastData(data[0]);
 
       const firstCity = data && data.length > 0 ? data[0] : null;
 
-      setCityObj(firstCity);
+      // setCityObj(firstCity);
+
       console.log(firstCity);
     } catch (error) {
       console.error("Errore durante la richiesta API:", error);
@@ -60,14 +100,10 @@ const WeatherShow = () => {
   };
 
   //   --------------------FETCH WEATHER DATA FROM CITY GEO DATA
-  const fetchWeatherData = async () => {
+  const fetchWeatherData = async (data) => {
     try {
-      if (!cityObj) {
-        throw new Error("Dati della città non disponibili");
-      }
-
       const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${cityObj.lat}&lon=${cityObj.lon}&lang=it&units=metric&appid=${APIKey}`
+        `https://api.openweathermap.org/data/2.5/weather?lat=${data.lat}&lon=${data.lon}&lang=it&units=metric&appid=${APIKey}`
       );
 
       if (!response.ok) {
@@ -83,14 +119,10 @@ const WeatherShow = () => {
   };
 
   //   --------------------FETCH WEATHER FORECAST DATA FROM GEO DATA
-  const fetchForecastData = async () => {
+  const fetchForecastData = async (data) => {
     try {
-      if (!cityObj) {
-        throw new Error("Dati della città non disponibili");
-      }
-
       const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/forecast?lat=${cityObj.lat}&lon=${cityObj.lon}&lang=it&units=metric&appid=${APIKey}`
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${data.lat}&lon=${data.lon}&lang=it&units=metric&appid=${APIKey}`
       );
 
       if (!response.ok) {
@@ -111,16 +143,6 @@ const WeatherShow = () => {
 
       await fetchGeoData();
       console.log(cityObj);
-
-      if (cityObj) {
-        await fetchWeatherData();
-        console.log(cityWeatherData);
-      }
-
-      if (cityWeatherData) {
-        await fetchForecastData();
-        console.log(cityWeatherDataForecast);
-      }
     } catch (error) {
       console.error("Errore durante le richieste API:", error);
     }
@@ -146,12 +168,17 @@ const WeatherShow = () => {
             </Row>
             <Row className="d-flex align-items-center">
               <Col xs={12} className="d-flex justify-content-center align-items-center m-0  ">
-                <img
-                  src={getWeatherIconUrl(cityWeatherData?.weather?.[0]?.icon)}
-                  alt={cityWeatherData?.weather?.[0]?.description}
-                  style={{ width: "35px" }}
-                />
-                <p className="mb-0 h6">{cityWeatherData?.weather?.[0]?.description}</p>
+                {cityWeatherData && (
+                  <>
+                    <img
+                      src={getWeatherIconUrl(cityWeatherData.weather[0].icon)}
+                      alt={cityWeatherData.weather[0].description}
+                      style={{ width: "35px" }}
+                    />
+
+                    <p className="mb-0 h6">{cityWeatherData.weather[0].description}</p>
+                  </>
+                )}
               </Col>
             </Row>
           </Col>
@@ -171,6 +198,7 @@ const WeatherShow = () => {
           <Col>
             {forecastArray.map((day, index) => (
               <ForecastElement
+                forecastDayData={groupedForecastArray[index + 1]}
                 key={`day-id-${index}`}
                 date={day?.dt_txt}
                 iconCodes={day?.weather?.[0]?.icon}
