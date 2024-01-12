@@ -38,7 +38,7 @@ const WeatherShow = () => {
   const fetchGeoData = async () => {
     try {
       const response = await fetch(
-        `http://api.openweathermap.org/geo/1.0/direct?q=${cityName},IT&limit=2&appid=87c377bac942ef29860a3850035e4973`
+        `http://api.openweathermap.org/geo/1.0/direct?q=${cityName},IT&limit=2&appid=b1c27102e6daa94992f0a508ba900eb9`
       );
 
       if (!response.ok) {
@@ -64,7 +64,7 @@ const WeatherShow = () => {
       }
 
       const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${cityObj.lat}&lon=${cityObj.lon}&lang=it&units=metric&appid=87c377bac942ef29860a3850035e4973`
+        `https://api.openweathermap.org/data/2.5/weather?lat=${cityObj.lat}&lon=${cityObj.lon}&lang=it&units=metric&appid=b1c27102e6daa94992f0a508ba900eb9`
       );
 
       if (!response.ok) {
@@ -87,7 +87,7 @@ const WeatherShow = () => {
       }
 
       const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/forecast?lat=${cityObj.lat}&lon=${cityObj.lon}&lang=it&units=metric&appid=87c377bac942ef29860a3850035e4973`
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${cityObj.lat}&lon=${cityObj.lon}&lang=it&units=metric&appid=b1c27102e6daa94992f0a508ba900eb9`
       );
 
       if (!response.ok) {
@@ -176,6 +176,20 @@ const WeatherShow = () => {
                 minTemp={day?.main?.temp_min}
               />
             ))}
+            <Row xs={4} className="cursor">
+              <Col>
+                <p>Martedì</p>
+              </Col>
+              <Col>
+                <i class="bi bi-cloud-drizzle"></i>
+              </Col>
+              <Col>
+                <p>12°C</p>
+              </Col>
+              <Col>
+                <p>0°C</p>
+              </Col>
+            </Row>
           </Col>
         </Row>
       </Container>
