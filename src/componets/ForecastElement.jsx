@@ -33,7 +33,7 @@ const ForecastElement = (props) => {
   return (
     <>
       {/* Riga contenente le informazioni principali sulla previsione del tempo */}
-      <Row xs={4} className="cursor" onClick={invokeCollapse}>
+      <Row xs={4} className="cursor border-1 border border-primary rounded-4  mb-2 pt-2" onClick={invokeCollapse}>
         <Col>
           <p>{dayOfWeek}</p>
         </Col>
@@ -50,7 +50,7 @@ const ForecastElement = (props) => {
 
       <Collapse in={isVisible}>
         <div>
-          <Container>
+          <Container className="border-bottom border-2 border-primary mb-3">
             {props.forecastDayData.elementi.map((elemento, index) => (
               <SubForecastElement
                 key={`sub-id-${index}`}
