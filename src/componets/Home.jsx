@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button, Col, Container, Form, InputGroup, Row } from "react-bootstrap";
+import { Image } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {

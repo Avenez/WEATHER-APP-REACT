@@ -8,6 +8,7 @@ const WeatherShow = () => {
   const [cityWeatherData, setCityWeatherData] = useState(null);
   const [cityWeatherDataForecast, setCityWeatherDataForecast] = useState(null);
   const { cityName } = useParams();
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   //--------------------------------------
@@ -26,7 +27,7 @@ const WeatherShow = () => {
     const giornoElemento = dataElemento?.[0];
     const oraElemento = dataElemento?.[1];
 
-    if (oraElemento === "12:00:00" && giornoCorrente !== giornoElemento) {
+    if ((oraElemento === "21:00:00" || oraElemento === "00:00:00") && giornoCorrente !== giornoElemento) {
       forecastArray.push(elemento);
       giornoCorrente = giornoElemento;
     }
@@ -52,20 +53,10 @@ const WeatherShow = () => {
       groupedForecastArray.push(existingGroup);
     }
 
-    // Aggiungi l'elemento al gruppo corrente
     existingGroup.elementi.push(elemento);
   });
 
-  // groupedForecastArray è un nuovo array dove ogni elemento rappresenta un gruppo di elementi corrispondenti a una data
-
-  console.log("qui");
-  console.log(groupedForecastArray);
-
   //------------------------------------------------------------
-
-  // Ora forecastByDate è un oggetto dove ogni chiave rappresenta una data e il valore è un array di elementi corrispondenti a quella data
-
-  console.log(forecastArray);
 
   const APIKey = "2693517c12647f45bc5c1d7466449299";
 
@@ -91,9 +82,7 @@ const WeatherShow = () => {
 
       const firstCity = data && data.length > 0 ? data[0] : null;
 
-      // setCityObj(firstCity);
-
-      console.log(firstCity);
+      setIsLoading(false);
     } catch (error) {
       console.error("Errore durante la richiesta API:", error);
     }
@@ -131,7 +120,6 @@ const WeatherShow = () => {
 
       const forecastData = await response.json();
       setCityWeatherDataForecast(forecastData);
-      console.log(forecastData);
     } catch (error) {
       console.error("Errore durante la richiesta API del meteo previsionale:", error);
     }
@@ -149,78 +137,86 @@ const WeatherShow = () => {
   };
   useEffect(() => {
     allMyFetch();
-    console.log(cityObj);
-    console.log(cityWeatherData);
   }, []);
 
   return (
     <>
-      <Container>
-        <Row>
-          <Col className=" d-sm-none"></Col>
-          <Col xs={8} md={5} className="text-center mt-5 weatherContainer">
-            <Row className="">
-              <h1 className="display-2">{capitalizedCityName}</h1>
-            </Row>
-            <Row>
-              <h2 className="display-1 mt-2 ">{temperature}°C</h2>
-              <p className="h3 mt-2 ">{`Percepita: ${temperaturePerc}°C`}</p>
-            </Row>
-            <Row className="d-flex align-items-center">
-              <Col xs={12} className="d-flex justify-content-center align-items-center m-0  ">
-                {cityWeatherData && (
-                  <>
-                    <img
-                      src={getWeatherIconUrl(cityWeatherData.weather[0].icon)}
-                      alt={cityWeatherData.weather[0].description}
-                      style={{ width: "35px" }}
-                    />
+      {isLoading ? (
+        <Container className="d-flex justify-content-center align-items-center vh-100 ">
+          <img
+            className="spinner mt-5"
+            src="https://spotler.co.uk/wp-content/uploads/sites/8/2023/03/Weather-GIF-source.gif"
+            alt="logo"
+          />
+        </Container>
+      ) : (
+        <Container>
+          <Row>
+            <Col></Col>
+            <Col xs={8} md={5} className="text-center mt-5 weatherContainer">
+              <Row className="">
+                <h1 className="display-2">{capitalizedCityName}</h1>
+              </Row>
+              <Row>
+                <h2 className="display-1 mt-2 ">{temperature}°C</h2>
+                <p className="h3 mt-2 ">{`Percepita: ${temperaturePerc}°C`}</p>
+              </Row>
+              <Row className="d-flex align-items-center">
+                <Col xs={12} className="d-flex justify-content-center align-items-center m-0  ">
+                  {cityWeatherData && (
+                    <>
+                      <img
+                        src={getWeatherIconUrl(cityWeatherData.weather[0].icon)}
+                        alt={cityWeatherData.weather[0].description}
+                        style={{ width: "35px" }}
+                      />
 
-                    <p className="mb-0 h6">{cityWeatherData.weather[0].description}</p>
-                  </>
-                )}
-              </Col>
-            </Row>
-          </Col>
-          <Col></Col>
-        </Row>
-        <Row xs={4} className="mt-3 mb-0 ">
-          <Col></Col>
-          <Col></Col>
-          <Col>
-            <p className="fw-bold">MAX</p>
-          </Col>
-          <Col>
-            <p className="fw-bold">MIN</p>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            {forecastArray.map((day, index) => (
-              <ForecastElement
-                forecastDayData={groupedForecastArray[index + 1]}
-                key={`day-id-${index}`}
-                date={day?.dt_txt}
-                iconCodes={day?.weather?.[0]?.icon}
-                maxTemp={day?.main?.temp_max}
-                minTemp={day?.main?.temp_min}
-              />
-            ))}
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={8}>
-            <button
-              className="btn btn-primary"
-              onClick={() => {
-                navigate("/");
-              }}
-            >
-              Return
-            </button>
-          </Col>
-        </Row>
-      </Container>
+                      <p className="mb-0 h6">{cityWeatherData.weather[0].description}</p>
+                    </>
+                  )}
+                </Col>
+              </Row>
+            </Col>
+            <Col></Col>
+          </Row>
+          <Row xs={4} className="mt-3 mb-0 ">
+            <Col></Col>
+            <Col></Col>
+            <Col>
+              <p className="fw-bold">MAX</p>
+            </Col>
+            <Col>
+              <p className="fw-bold">MIN</p>
+            </Col>
+          </Row>
+          <Row>
+            <Col className="">
+              {forecastArray.map((day, index) => (
+                <ForecastElement
+                  forecastDayData={groupedForecastArray[index]}
+                  key={`day-id-${index}`}
+                  date={day.dt_txt}
+                  iconCodes={day.weather[0].icon}
+                  maxTemp={day.main.temp_max}
+                  minTemp={day.main.temp_min}
+                />
+              ))}
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={8}>
+              <button
+                className="btn btn-primary"
+                onClick={() => {
+                  navigate("/");
+                }}
+              >
+                Return
+              </button>
+            </Col>
+          </Row>
+        </Container>
+      )}
     </>
   );
 };

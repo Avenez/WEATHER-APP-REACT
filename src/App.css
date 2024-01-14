@@ -38,12 +38,16 @@
 }
 
 .input-group {
-  border: 1px solid blue;
+  border: 1px solid #43a9df;
+}
+
+.border-forecast {
+  border-bottom: 2px solid #2d6b8d;
 }
 
 body {
   background: rgb(255, 255, 255);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 1) 24%, rgba(151, 177, 255, 1) 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 1) 24%, rgba(67, 169, 223, 1) 100%);
   background-attachment: fixed;
 }
 
@@ -55,4 +59,9 @@ body {
   color: white;
   background-color: cornflowerblue;
   border-radius: 20px;
+}
+
+.spinner {
+  width: 150px;
+  border-radius: 40px;
 }

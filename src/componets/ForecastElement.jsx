@@ -33,36 +33,37 @@ const ForecastElement = (props) => {
   return (
     <>
       {/* Riga contenente le informazioni principali sulla previsione del tempo */}
-      <Row xs={4} className="cursor border-1 border border-primary rounded-4  mb-2 pt-2" onClick={invokeCollapse}>
-        <Col>
+      {/* <Container> */}
+      <Row xs={4} className="cursor input-group rounded-4  mb-2 pt-2" onClick={invokeCollapse}>
+        <Col className="d-flex">
+          {isVisible ? <i class="bi bi-caret-up-fill me-1"></i> : <i className="bi bi-caret-down-fill me-1"></i>}
           <p>{dayOfWeek}</p>
         </Col>
         <Col>
           <img src={getWeatherIconUrl(props.iconCodes)} alt="Icona meteo" style={{ width: "35px" }} />
         </Col>
-        <Col>
+        <Col className="ps-4">
           <p>{temperatureMax}°C</p>
         </Col>
-        <Col>
+        <Col className="ps-4">
           <p>{temperatureMin}°C</p>
         </Col>
       </Row>
 
       <Collapse in={isVisible}>
-        <div>
-          <Container className="border-bottom border-2 border-primary mb-3">
-            {props.forecastDayData.elementi.map((elemento, index) => (
-              <SubForecastElement
-                key={`sub-id-${index}`}
-                ora={elemento.dt_txt}
-                tempMin={elemento.main.temp_min}
-                tempMax={elemento.main.temp_max}
-                icon={elemento.weather[0].icon}
-              />
-            ))}
-          </Container>
+        <div className="border-forecast mb-3">
+          {props.forecastDayData.elementi.map((elemento, index) => (
+            <SubForecastElement
+              key={`sub-id-${index}`}
+              ora={elemento.dt_txt}
+              tempMin={elemento.main.temp_min.toFixed(1)}
+              tempMax={elemento.main.temp_max.toFixed(1)}
+              icon={elemento.weather[0].icon}
+            />
+          ))}
         </div>
       </Collapse>
+      {/* </Container> */}
     </>
   );
 };
