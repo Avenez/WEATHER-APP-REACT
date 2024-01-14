@@ -9,9 +9,15 @@ const WeatherShow = () => {
   const [cityWeatherDataForecast, setCityWeatherDataForecast] = useState(null);
   const { cityName } = useParams();
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingForecast, setIsLoadingForecast] = useState(true);
+
   const navigate = useNavigate();
 
   //--------------------------------------
+
+  const redirect = () => {
+    navigate("/notFoud");
+  };
 
   //--------------------------------------
 
@@ -73,7 +79,8 @@ const WeatherShow = () => {
       );
 
       if (!response.ok) {
-        throw new Error("Errore nella richiesta API");
+        navigate("/notFoud");
+        throw new Error("Errore nella richiesta API per le coordinate della città");
       }
 
       const data = await response.json();
@@ -96,14 +103,15 @@ const WeatherShow = () => {
       );
 
       if (!response.ok) {
-        throw new Error("Errore nella richiesta API del meteo");
+        throw new Error("Errore nella richiesta API per i dati meteo");
       }
 
       const weatherData = await response.json();
       setCityWeatherData(weatherData);
       console.log("questi sono i dati del tempo" + weatherData);
     } catch (error) {
-      console.error("Errore durante la richiesta API del meteo:", error);
+      navigate("/notFoud");
+      console.error("Errore durante la richiesta API per i dati meteo:", error);
     }
   };
 
@@ -120,7 +128,9 @@ const WeatherShow = () => {
 
       const forecastData = await response.json();
       setCityWeatherDataForecast(forecastData);
+      setIsLoadingForecast(false);
     } catch (error) {
+      navigate("/notFoud");
       console.error("Errore durante la richiesta API del meteo previsionale:", error);
     }
   };
@@ -141,7 +151,7 @@ const WeatherShow = () => {
 
   return (
     <>
-      {isLoading ? (
+      {isLoadingForecast ? (
         <Container className="d-flex justify-content-center align-items-center vh-100 ">
           <img
             className="spinner mt-5"
@@ -179,42 +189,45 @@ const WeatherShow = () => {
             </Col>
             <Col></Col>
           </Row>
-          <Row xs={4} className="mt-3 mb-0 ">
-            <Col></Col>
-            <Col></Col>
-            <Col>
-              <p className="fw-bold">MAX</p>
-            </Col>
-            <Col>
-              <p className="fw-bold">MIN</p>
-            </Col>
-          </Row>
-          <Row>
-            <Col className="">
-              {forecastArray.map((day, index) => (
-                <ForecastElement
-                  forecastDayData={groupedForecastArray[index]}
-                  key={`day-id-${index}`}
-                  date={day.dt_txt}
-                  iconCodes={day.weather[0].icon}
-                  maxTemp={day.main.temp_max}
-                  minTemp={day.main.temp_min}
-                />
-              ))}
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={8}>
-              <button
-                className="btn btn-primary"
-                onClick={() => {
-                  navigate("/");
-                }}
-              >
-                Return
-              </button>
-            </Col>
-          </Row>
+
+          <>
+            <Row xs={4} className="mt-3 mb-0 ">
+              <Col></Col>
+              <Col></Col>
+              <Col>
+                <p className="fw-bold">MAX</p>
+              </Col>
+              <Col>
+                <p className="fw-bold">MIN</p>
+              </Col>
+            </Row>
+            <Row>
+              <Col className="">
+                {forecastArray.map((day, index) => (
+                  <ForecastElement
+                    forecastDayData={groupedForecastArray[index]}
+                    key={`day-id-${index}`}
+                    date={day.dt_txt}
+                    iconCodes={day.weather[0].icon}
+                    maxTemp={day.main.temp_max}
+                    minTemp={day.main.temp_min}
+                  />
+                ))}
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={8}>
+                <button
+                  className="btn btn-primary"
+                  onClick={() => {
+                    navigate("/");
+                  }}
+                >
+                  Return
+                </button>
+              </Col>
+            </Row>
+          </>
         </Container>
       )}
     </>

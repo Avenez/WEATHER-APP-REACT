@@ -36,7 +36,11 @@ const ForecastElement = (props) => {
       {/* <Container> */}
       <Row xs={4} className="cursor input-group rounded-4  mb-2 pt-2" onClick={invokeCollapse}>
         <Col className="d-flex">
-          {isVisible ? <i class="bi bi-caret-up-fill me-1"></i> : <i className="bi bi-caret-down-fill me-1"></i>}
+          {isVisible ? (
+            <i class="bi bi-caret-up-fill me-1 arrow-1-anim"></i>
+          ) : (
+            <i className="bi bi-caret-down-fill me-1"></i>
+          )}
           <p>{dayOfWeek}</p>
         </Col>
         <Col>

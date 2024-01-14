@@ -3,6 +3,7 @@ import "./App.css";
 import { BrowserRouter as Router, Route, Routes, BrowserRouter } from "react-router-dom";
 import Home from "./componets/Home";
 import WeatherShow from "./componets/WeatherShow";
+import SearchNotGood from "./componets/SearchNotGood";
 
 function App() {
   return (
@@ -12,6 +13,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/WeatherShow/:cityName" element={<WeatherShow />} />
+          {/* <Route path="*" element={<SearchNotGood />} /> */}
+          <Route path="/notFoud" element={<SearchNotGood />} />
         </Routes>
       </BrowserRouter>
     </>

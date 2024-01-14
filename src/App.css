@@ -65,3 +65,35 @@ body {
   width: 150px;
   border-radius: 40px;
 }
+
+.bg-error {
+  background-color: #2d6b8d;
+  border-radius: 20px;
+}
+
+.image-div {
+  width: 400px;
+  margin-bottom: -100px;
+}
+
+.not-found-img {
+  object-fit: cover;
+}
+
+.btn-return {
+  background-color: #43a9df;
+  color: white;
+  transition: ease-in-out 0.5s;
+}
+
+.btn-return:hover {
+  background-color: white;
+  border: 1px solid #43a9df;
+  color: #2d6b8d;
+  transition: ease-in-out 0.5s;
+}
+
+.arrow-1-anim:active {
+  transform: rotate(180°);
+  animation: alternate ease-in-out 1s;
+}
