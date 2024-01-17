@@ -3,9 +3,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import { Collapse } from "react-bootstrap";
 import SubForecastElement from "./SubForecastElement";
 
-// Definisco il componente ForecastElement
 const ForecastElement = (props) => {
-  // Funzione per ottenere l'URL dell'icona del tempo
   const getWeatherIconUrl = (iconCode) => {
     return `https://openweathermap.org/img/wn/${iconCode}.png`;
   };
