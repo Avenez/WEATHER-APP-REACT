@@ -33,7 +33,7 @@ const WeatherShow = () => {
     const giornoElemento = dataElemento?.[0];
     const oraElemento = dataElemento?.[1];
 
-    if ((oraElemento === "21:00:00" || oraElemento === "00:00:00") && giornoCorrente !== giornoElemento) {
+    if ((oraElemento === dataElemento[1] || oraElemento === "00:00:00") && giornoCorrente !== giornoElemento) {
       forecastArray.push(elemento);
       giornoCorrente = giornoElemento;
     }
@@ -108,7 +108,7 @@ const WeatherShow = () => {
 
       const weatherData = await response.json();
       setCityWeatherData(weatherData);
-      console.log("questi sono i dati del tempo" + weatherData);
+      console.log(cityWeatherData);
     } catch (error) {
       navigate("/notFoud");
       console.error("Errore durante la richiesta API per i dati meteo:", error);
@@ -129,6 +129,7 @@ const WeatherShow = () => {
       const forecastData = await response.json();
       setCityWeatherDataForecast(forecastData);
       setIsLoadingForecast(false);
+      console.log(forecastData);
     } catch (error) {
       navigate("/notFoud");
       console.error("Errore durante la richiesta API del meteo previsionale:", error);
