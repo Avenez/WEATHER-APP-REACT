@@ -16,8 +16,8 @@ const ForecastElement = (props) => {
   const dateObject = new Date(props.date);
 
   // Estrggo il nome del giorno della settimana dalla data
-  const options = { weekday: "long", day: "2-digit" };
-  const dayOfWeek = dateObject.toLocaleDateString("it-IT", options);
+  const options = { weekday: "short", day: "2-digit" };
+  const dayOfWeek = dateObject.toLocaleDateString("it-IT", options).toUpperCase();
 
   // Utilizzo lo stato locale per gestire la visibilità del pannello di collasso
   const [isVisible, setVisibility] = useState(false);
