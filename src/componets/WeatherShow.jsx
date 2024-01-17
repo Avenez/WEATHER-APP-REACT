@@ -15,10 +15,6 @@ const WeatherShow = () => {
 
   //--------------------------------------
 
-  const redirect = () => {
-    navigate("/notFoud");
-  };
-
   //--------------------------------------
 
   const capitalizedCityName = cityName.charAt(0).toUpperCase() + cityName.slice(1);
