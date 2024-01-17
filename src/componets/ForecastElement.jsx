@@ -3,25 +3,25 @@ import { Col, Container, Row } from "react-bootstrap";
 import { Collapse } from "react-bootstrap";
 import SubForecastElement from "./SubForecastElement";
 
-// Definisci il componente ForecastElement
+// Definisco il componente ForecastElement
 const ForecastElement = (props) => {
   // Funzione per ottenere l'URL dell'icona del tempo
   const getWeatherIconUrl = (iconCode) => {
     return `https://openweathermap.org/img/wn/${iconCode}.png`;
   };
 
-  // Converti le temperature in formato stringa con una cifra decimale
+  // Converto le temperature in formato stringa con una cifra decimale
   const temperatureMax = props.maxTemp.toFixed(1);
   const temperatureMin = props.minTemp.toFixed(1);
 
-  // Converte la stringa della data in un oggetto Date
+  // Converto la stringa della data in un oggetto Date
   const dateObject = new Date(props.date);
 
-  // Estrae il nome del giorno della settimana dalla data
+  // Estrggo il nome del giorno della settimana dalla data
   const options = { weekday: "long" };
   const dayOfWeek = dateObject.toLocaleDateString("it-IT", options);
 
-  // Utilizza lo stato locale per gestire la visibilità del pannello di collasso
+  // Utilizzo lo stato locale per gestire la visibilità del pannello di collasso
   const [isVisible, setVisibility] = useState(false);
 
   // Funzione per attivare/diattivare il pannello di collasso
@@ -29,11 +29,8 @@ const ForecastElement = (props) => {
     setVisibility(!isVisible);
   };
 
-  // Ritorna la struttura del componente JSX
   return (
     <>
-      {/* Riga contenente le informazioni principali sulla previsione del tempo */}
-      {/* <Container> */}
       <Row xs={4} className="cursor input-group rounded-4  mb-2 pt-2" onClick={invokeCollapse}>
         <Col className="d-flex">
           {isVisible ? (
@@ -68,7 +65,6 @@ const ForecastElement = (props) => {
           <div className="border-forecast"></div>
         </div>
       </Collapse>
-      {/* </Container> */}
     </>
   );
 };
