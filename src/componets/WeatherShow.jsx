@@ -33,7 +33,7 @@ const WeatherShow = () => {
     const giornoElemento = dataElemento?.[0];
     const oraElemento = dataElemento?.[1];
 
-    if ((oraElemento === dataElemento[1] || oraElemento === "00:00:00") && giornoCorrente !== giornoElemento) {
+    if (oraElemento === dataElemento[1] && giornoCorrente !== giornoElemento) {
       forecastArray.push(elemento);
       giornoCorrente = giornoElemento;
     }
