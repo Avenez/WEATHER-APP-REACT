@@ -190,44 +190,42 @@ const WeatherShow = () => {
             <Col></Col>
           </Row>
 
-          <>
-            <Row xs={4} className="mt-3 mb-0 ">
-              <Col></Col>
-              <Col></Col>
-              <Col>
-                <p className="fw-bold">MAX</p>
-              </Col>
-              <Col>
-                <p className="fw-bold">MIN</p>
-              </Col>
-            </Row>
-            <Row>
-              <Col className="">
-                {forecastArray.map((day, index) => (
-                  <ForecastElement
-                    forecastDayData={groupedForecastArray[index]}
-                    key={`day-id-${index}`}
-                    date={day.dt_txt}
-                    iconCodes={day.weather[0].icon}
-                    maxTemp={day.main.temp_max}
-                    minTemp={day.main.temp_min}
-                  />
-                ))}
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={8}>
-                <button
-                  className="btn btn-primary"
-                  onClick={() => {
-                    navigate("/");
-                  }}
-                >
-                  Return
-                </button>
-              </Col>
-            </Row>
-          </>
+          <Row xs={4} className="mt-3 mb-0 ">
+            <Col></Col>
+            <Col></Col>
+            <Col>
+              <p className="fw-bold">MAX</p>
+            </Col>
+            <Col>
+              <p className="fw-bold">MIN</p>
+            </Col>
+          </Row>
+          <Row>
+            <Col className="ps-4">
+              {forecastArray.map((day, index) => (
+                <ForecastElement
+                  forecastDayData={groupedForecastArray[index]}
+                  key={`day-id-${index}`}
+                  date={day.dt_txt}
+                  iconCodes={day.weather[0].icon}
+                  maxTemp={day.main.temp_max}
+                  minTemp={day.main.temp_min}
+                />
+              ))}
+            </Col>
+          </Row>
+          <Row>
+            <Col className="text-center mt-2">
+              <button
+                className="btn btn-primary"
+                onClick={() => {
+                  navigate("/");
+                }}
+              >
+                <i class="bi bi-caret-left-fill me-1"></i>Home
+              </button>
+            </Col>
+          </Row>
         </Container>
       )}
     </>

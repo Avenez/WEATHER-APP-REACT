@@ -43,7 +43,7 @@ const ForecastElement = (props) => {
           )}
           <p>{dayOfWeek}</p>
         </Col>
-        <Col>
+        <Col className="ps-4">
           <img src={getWeatherIconUrl(props.iconCodes)} alt="Icona meteo" style={{ width: "35px" }} />
         </Col>
         <Col className="ps-4">
@@ -55,7 +55,7 @@ const ForecastElement = (props) => {
       </Row>
 
       <Collapse in={isVisible}>
-        <div className="border-forecast mb-3">
+        <div className=" mb-3">
           {props.forecastDayData.elementi.map((elemento, index) => (
             <SubForecastElement
               key={`sub-id-${index}`}
@@ -65,6 +65,7 @@ const ForecastElement = (props) => {
               icon={elemento.weather[0].icon}
             />
           ))}
+          <div className="border-forecast"></div>
         </div>
       </Collapse>
       {/* </Container> */}

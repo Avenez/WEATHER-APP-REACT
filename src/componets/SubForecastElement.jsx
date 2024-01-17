@@ -10,20 +10,22 @@ const SubForecastElement = (props) => {
 
   return (
     <>
-      <Row xs={4}>
-        <Col>
-          <p>{orario}</p>
-        </Col>
-        <Col className="ps-1">
-          <img src={getWeatherIconUrl(props.icon)} alt="Icona meteo" style={{ width: "35px" }} />
-        </Col>
-        <Col className="ps-2">
-          <p>{props.tempMax}°C</p>
-        </Col>
-        <Col className="ps-2">
-          <p>{props.tempMin}°C</p>
-        </Col>
-      </Row>
+      <div>
+        <Row xs={4}>
+          <Col>
+            <p>{orario}</p>
+          </Col>
+          <Col className="ps-3">
+            <img src={getWeatherIconUrl(props.icon)} alt="Icona meteo" style={{ width: "35px" }} />
+          </Col>
+          <Col className="ps-2">
+            <p>{props.tempMax}°C</p>
+          </Col>
+          <Col className="ps-2">
+            <p>{props.tempMin}°C</p>
+          </Col>
+        </Row>
+      </div>
     </>
   );
 };

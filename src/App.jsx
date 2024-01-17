@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes, BrowserRouter } from "react-rou
 import Home from "./componets/Home";
 import WeatherShow from "./componets/WeatherShow";
 import SearchNotGood from "./componets/SearchNotGood";
+import PageNotFound from "./componets/PageNotFound";
 
 function App() {
   return (
@@ -13,8 +14,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/WeatherShow/:cityName" element={<WeatherShow />} />
-          {/* <Route path="*" element={<SearchNotGood />} /> */}
           <Route path="/notFoud" element={<SearchNotGood />} />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
     </>

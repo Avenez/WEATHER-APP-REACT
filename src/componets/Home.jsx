@@ -26,7 +26,7 @@ const Home = () => {
             <Form onSubmit={handleSubmit}>
               <Row>
                 <Col></Col>
-                <Col xs={6}>
+                <Col xs={10} md={8} lg={6}>
                   <InputGroup className="mt-2 border-0">
                     <Form.Control
                       className="rounded-pill input-group "
