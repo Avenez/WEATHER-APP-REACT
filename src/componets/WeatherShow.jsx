@@ -73,7 +73,9 @@ const WeatherShow = () => {
       const response = await fetch(
         `http://api.openweathermap.org/geo/1.0/direct?q=${cityName},IT&limit=2&appid=${APIKey}`
       );
-
+      if (response.status === 404) throw new Error("Risorsa non trovata");
+      if (response.status >= 400 && response.status < 500) throw new Error("Errore lato Client");
+      if (response.status >= 500 && response.status < 600) throw new Error("Errore lato Server");
       if (!response.ok) {
         navigate("/notFoud");
         throw new Error("Errore nella richiesta API per le coordinate della città");
@@ -97,7 +99,9 @@ const WeatherShow = () => {
       const response = await fetch(
         `https://api.openweathermap.org/data/2.5/weather?lat=${data.lat}&lon=${data.lon}&lang=it&units=metric&appid=${APIKey}`
       );
-
+      if (response.status === 404) throw new Error("Risorsa non trovata");
+      if (response.status >= 400 && response.status < 500) throw new Error("Errore lato Client");
+      if (response.status >= 500 && response.status < 600) throw new Error("Errore lato Server");
       if (!response.ok) {
         throw new Error("Errore nella richiesta API per i dati meteo");
       }
@@ -117,7 +121,9 @@ const WeatherShow = () => {
       const response = await fetch(
         `https://api.openweathermap.org/data/2.5/forecast?lat=${data.lat}&lon=${data.lon}&lang=it&units=metric&appid=${APIKey}`
       );
-
+      if (response.status === 404) throw new Error("Risorsa non trovata");
+      if (response.status >= 400 && response.status < 500) throw new Error("Errore lato Client");
+      if (response.status >= 500 && response.status < 600) throw new Error("Errore lato Server");
       if (!response.ok) {
         throw new Error("Errore nella richiesta API del meteo previsionale");
       }
