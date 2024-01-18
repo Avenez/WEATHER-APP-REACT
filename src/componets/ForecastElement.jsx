@@ -29,16 +29,16 @@ const ForecastElement = (props) => {
 
   return (
     <>
-      <Row xs={4} className="cursor input-group rounded-4  mb-2 pt-2" onClick={invokeCollapse}>
-        <Col className="d-flex">
+      <Row className="cursor input-group rounded-4  mb-2 pt-2" onClick={invokeCollapse}>
+        <Col xs={4} className="d-flex">
           {isVisible ? (
-            <i class="bi bi-caret-up-fill me-1 arrow-1-anim"></i>
+            <i className="bi bi-caret-up-fill me-1 arrow-1-anim"></i>
           ) : (
             <i className="bi bi-caret-down-fill me-1"></i>
           )}
           <p>{dayOfWeek}</p>
         </Col>
-        <Col className="ps-4">
+        <Col xs={2} className="ps-4">
           <img src={getWeatherIconUrl(props.iconCodes)} alt="Icona meteo" style={{ width: "35px" }} />
         </Col>
         <Col className="ps-4">

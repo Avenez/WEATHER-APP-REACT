@@ -11,11 +11,11 @@ const SubForecastElement = (props) => {
   return (
     <>
       <div>
-        <Row xs={4}>
-          <Col>
+        <Row>
+          <Col xs={4} className="ps-4">
             <p>{orario}</p>
           </Col>
-          <Col className="ps-3">
+          <Col xs={2} className="ps-3">
             <img src={getWeatherIconUrl(props.icon)} alt="Icona meteo" style={{ width: "35px" }} />
           </Col>
           <Col className="ps-2">
